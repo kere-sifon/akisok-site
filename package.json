@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "test": "tsx --test lib/resolve-image.test.ts",
+    "ci": "npm run lint && npm test && npm run build",
     "placeholders": "node scripts/generate-placeholders.mjs"
   },
   "dependencies": {
