@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import { ImagePlaceholder } from "@/components/ImagePlaceholder";
+import { PostMedia } from "@/components/PostMedia";
 import { SourceTag } from "@/components/SourceTag";
-import { YouTubeEmbed } from "@/components/YouTubeEmbed";
 import { getPillar } from "@/lib/pillars";
 import { getPostBySlug, getPostParams, type Post } from "@/lib/posts";
 import { formatDate } from "@/lib/utils";
@@ -59,21 +58,15 @@ export default async function PostPage({ params }: PostPageProps) {
         {kicker(post)}
       </p>
 
-      {post.youtubeId ? (
-        <YouTubeEmbed
-          videoId={post.youtubeId}
-          title={post.title}
-          className="mt-10 aspect-video w-full max-w-[48rem]"
-          priority
-        />
-      ) : (
-        <ImagePlaceholder
-          imageKey={post.image}
-          resolved={post.resolvedImage}
-          className="mt-10 aspect-[16/10] w-full max-w-[48rem]"
-          priority
-        />
-      )}
+      <PostMedia
+        post={post}
+        className={
+          post.youtubeId
+            ? "mt-10 aspect-video w-full max-w-[48rem]"
+            : "mt-10 aspect-[16/10] w-full max-w-[48rem]"
+        }
+        priority
+      />
 
       <div className="mt-6">
         <SourceTag name={post.source_name} url={post.source_url} />

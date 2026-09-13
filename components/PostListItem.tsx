@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ImagePlaceholder } from "@/components/ImagePlaceholder";
+import { PostMedia } from "@/components/PostMedia";
 import { SourceTag } from "@/components/SourceTag";
 import type { Post } from "@/lib/posts";
 
@@ -15,19 +15,25 @@ export function PostListItem({ post, index }: PostListItemProps) {
         <span className="pt-0.5 font-mono text-sm tracking-wider text-ink/35">
           {String(index + 1).padStart(2, "0")}
         </span>
-        <Link
-          href={`/post/${post.slug}`}
-          tabIndex={-1}
-          aria-hidden
-          className="block shrink-0"
-        >
-          <ImagePlaceholder
-            imageKey={post.image}
-            resolved={post.resolvedImage}
-            size="thumbnail"
-            className="size-20"
+        {post.youtubeId ? (
+          <PostMedia
+            post={post}
+            className="aspect-video w-40 shrink-0 md:w-52"
           />
-        </Link>
+        ) : (
+          <Link
+            href={`/post/${post.slug}`}
+            tabIndex={-1}
+            aria-hidden
+            className="block shrink-0"
+          >
+            <PostMedia
+              post={post}
+              size="thumbnail"
+              className="size-20"
+            />
+          </Link>
+        )}
         <div className="min-w-0">
           {post.permanent ? (
             <p className="mb-1.5 font-mono text-[10px] tracking-[0.16em] text-ink/45 uppercase">
