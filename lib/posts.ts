@@ -4,6 +4,7 @@ import matter from "gray-matter";
 import { resolveImage, type ResolvedImage } from "@/lib/images";
 import { excerptFromBody } from "@/lib/utils";
 import { PILLARS, type PillarSlug } from "@/lib/pillars";
+import { youtubeIdFromUrl } from "@/lib/youtube";
 
 const POSTS_DIR = path.join(process.cwd(), "content", "posts");
 
@@ -23,6 +24,7 @@ type ParsedPost = PostFrontMatter & {
   slug: string;
   content: string;
   excerpt: string;
+  youtubeId: string | null;
 };
 
 export type Post = ParsedPost & {
@@ -77,6 +79,7 @@ function parsePost(filename: string): ParsedPost {
     source_url: data.source_url,
     featured: Boolean(data.featured),
     permanent: Boolean(data.permanent),
+    youtubeId: youtubeIdFromUrl(String(data.source_url)),
     content,
     excerpt: excerptFromBody(content),
   };
