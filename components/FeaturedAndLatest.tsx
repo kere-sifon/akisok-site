@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { PostListItem } from "@/components/PostListItem";
+import { PostMedia } from "@/components/PostMedia";
 import { SourceTag } from "@/components/SourceTag";
 import { getPillar } from "@/lib/pillars";
 import { getFeaturedPost, getLatestPosts, type Post } from "@/lib/posts";
@@ -33,19 +33,29 @@ export async function FeaturedAndLatest() {
         <p className="mb-5 font-mono text-[11px] tracking-[0.2em] text-ink/50 uppercase">
           Featured
         </p>
-        <Link href={`/post/${featured.slug}`} className="group block">
-          <ImagePlaceholder
-            imageKey={featured.image}
-            resolved={featured.resolvedImage}
-            className="aspect-[16/10] w-full"
-          />
-          <p className="mt-6 font-mono text-[11px] tracking-[0.18em] text-ink/55 uppercase">
-            {kicker(featured)}
-          </p>
-          <h2 className="mt-3 font-display text-3xl leading-[1.18] font-medium tracking-[-0.02em] text-ink group-hover:text-accent md:text-[2.35rem]">
-            {featured.title}
-          </h2>
-        </Link>
+        {featured.youtubeId ? (
+          <>
+            <PostMedia post={featured} className="aspect-video w-full" />
+            <Link href={`/post/${featured.slug}`} className="group block">
+              <p className="mt-6 font-mono text-[11px] tracking-[0.18em] text-ink/55 uppercase">
+                {kicker(featured)}
+              </p>
+              <h2 className="mt-3 font-display text-3xl leading-[1.18] font-medium tracking-[-0.02em] text-ink group-hover:text-accent md:text-[2.35rem]">
+                {featured.title}
+              </h2>
+            </Link>
+          </>
+        ) : (
+          <Link href={`/post/${featured.slug}`} className="group block">
+            <PostMedia post={featured} className="aspect-[16/10] w-full" />
+            <p className="mt-6 font-mono text-[11px] tracking-[0.18em] text-ink/55 uppercase">
+              {kicker(featured)}
+            </p>
+            <h2 className="mt-3 font-display text-3xl leading-[1.18] font-medium tracking-[-0.02em] text-ink group-hover:text-accent md:text-[2.35rem]">
+              {featured.title}
+            </h2>
+          </Link>
+        )}
         <p className="mt-4 max-w-[40rem] font-body text-[1.05rem] leading-relaxed text-ink/75">
           {featured.excerpt}
         </p>
