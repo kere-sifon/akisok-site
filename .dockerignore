@@ -1,0 +1,17 @@
+.git
+.next
+node_modules
+logs
+*.log
+.env*
+!.env.local.example
+.DS_Store
+.cursor
+.vercel
+coverage
+tsconfig.tsbuildinfo
+Dockerfile
+.dockerignore
+deploy
+AGENTS.md
+CLAUDE.md

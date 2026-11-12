@@ -69,6 +69,12 @@ Regenerate abstract placeholder textures:
 node scripts/generate-placeholders.mjs
 ```
 
+## Homelab Kubernetes
+
+Production is a Next.js standalone image on **homelab-k8s** (same pattern as finance-agent): Nexus `docker-hosted/akisok-site`, Cilium LoadBalancer `192.168.2.244:3000`, public hostname `https://akisok.keresifon.com`. See `deploy/k8s/README.md` and `deploy/ci/README.md`.
+
+Cloudinary credentials must be present at **image build** time (`CLOUDINARY_*` build-args / GitHub secrets). Missing values fall back to local placeholders.
+
 ## Status
 
 Homepage, `/all`, `/[pillar]`, and `/post/[slug]` are in place. The curation agent writes MDX keys; this repo resolves photos via Cloudinary, then local placeholders.

@@ -5,7 +5,8 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.join(__dirname),
   },
-  images: {
+  // Self-contained server bundle for the homelab container image.
+  output: "standalone",  images: {
     remotePatterns: [
       { protocol: "https", hostname: "res.cloudinary.com" },
     ],
