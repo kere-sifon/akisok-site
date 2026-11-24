@@ -2,13 +2,18 @@
 
 `.github/workflows/deploy.yml` builds the image, pushes it to the homelab Nexus
 registry, and rolls it out to **homelab-k8s** on every merge to `main`. It runs
-on the org's self-hosted runner **`gh-runner-02`** on the home LAN
-(`runs-on: [self-hosted, linux, x64, homelab]`), because GitHub-hosted runners
-can't reach Nexus or the cluster API.
+on the org's self-hosted Actions runner, a pod inside the homelab cluster
+(`runs-on: homelab-k8s`), because GitHub-hosted runners can't reach Nexus or
+the cluster API.
+
+The runner image doesn't always include `kubectl`, so the **Ensure kubectl on
+PATH** step uses one already on the runner (`PATH`, `/usr/local/bin`,
+`/usr/bin`, or `~/bin`) or downloads kubectl v1.31.4 to `~/bin`.
 
 ```
-merge to main ──► gh-runner-02 (LAN)
+merge to main ──► homelab-k8s runner pod
                     ├─ docker login nexus-lan.keresifon.com
+                    ├─ ensure kubectl on PATH
                     ├─ deploy/deploy.sh all   (SYNC_SECRETS=0)
                     │    ├─ docker buildx build --platform linux/amd64 --push
                     │    ├─ kubectl apply -k deploy/k8s   (as github-deployer)
