@@ -48,9 +48,9 @@ Health check: `curl -I http://192.168.2.244:3000/`
 Still needed before the first image rolls out:
 
 - `gh secret set NEXUS_PUSH_PASSWORD -R kere-sifon/akisok-site` (same docker-hosted-push password as kwesiblack)
-- Merge/push this branch to `main` so gh-runner-02 builds the image
+- Merge/push this branch to `main` so the homelab-k8s runner builds the image
 - Cloudflare Tunnel hostname `akisok.keresifon.com` → `http://192.168.2.244:3000`
 
 ## CI
 
-See [../ci/README.md](../ci/README.md). Push to `main` on `kere-sifon/akisok-site` runs on **gh-runner-02**.
+See [../ci/README.md](../ci/README.md). Push to `main` on `kere-sifon/akisok-site` runs on the **homelab-k8s** runner.
